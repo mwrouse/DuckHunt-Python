@@ -36,4 +36,6 @@ There are three colors of ducks, and they range in point value.
 <h3>Requirements</h3>
 This game requires you to have [Python 3.4.3](https://www.python.org/downloads/release/python-343/) installed on your computer, and it will run on any computer with [Python 3.4.3](https://www.python.org/downloads/release/python-343/) installed on it.
 
+Along with PyGame and Python you will need to install the LiveWires python module, to do this go to the "Installs/Livewires" folder in this repository and run the "setup.bat" file if you are on Windows. If you're running a version of Linux you should be able to just run the "setup.py" file.
+
 You will also need to download the correct version of [PyGame](https://bitbucket.org/pygame/pygame/downloads) for your operating system.
