@@ -27,5 +27,9 @@ The game gives you one minute to shoot as many ducks, at the end you will see yo
 <h3>Duck Point Value</h3>
 There are three colors of ducks, and they range in point value.
 
-<h6>![Black Duck](https://raw.githubusercontent.com/mwrouse/Python_DuckHunt/master/Sprites/black/duck1.png) Black - 75 points</h6>
+![Black Duck](https://raw.githubusercontent.com/mwrouse/Python_DuckHunt/master/Sprites/black/duck1.png) Black Duck - 75 points
+
+![Red Duck](https://raw.githubusercontent.com/mwrouse/Python_DuckHunt/master/Sprites/red/duck1.png) Red Duck - 50 points
+
+![Blue Duck](https://raw.githubusercontent.com/mwrouse/Python_DuckHunt/master/Sprites/blue/duck1.png) Blue Duck - 25 points
 
