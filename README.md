@@ -1,6 +1,6 @@
 <h1>Python Duck Hunt</h1>
 
-This was a project I did while still in highschool, the objective was to recreate a classic game using Python.
+This was a project I did while still in high school, the objective was to recreate a classic game using Python.
 
 The game of my choice was [Duck Hunt](http://en.wikipedia.org/wiki/Duck_Hunt) which was released in 1984/1985/1987 (Japan/US/Europe) for 
 NES console.
