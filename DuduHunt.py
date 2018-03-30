@@ -13,45 +13,29 @@ class Image(pygame.sprite.Sprite):
         self.rect.top = top
 
 
-# pointerImg_rect = pointerImg.get_rect()
-#
-# in your main loop update the position every frame
-#
-# pointerImg_rect.center = pygame.mouse.get_pos()
-#
-# in your draw, draw your image to its rect position
-#
-# gameDisplay.blit(cursor, cursor_rect)
-
-
 class Cursor(Image):
 
     def __init__(self):
         super().__init__('Sprites/cursor.png', left=500, top=350)
         # Load gunshot sound
         self.gunShotSound = pygame.mixer.Sound(os.path.join(os.getcwd(), 'Sounds', 'shot.wav'))
+        # Hide mouse
+        pygame.mouse.set_visible(False)
+        self.clicked = False 
 
     def update(self):
-        self.rect.left, self.rect.top = pygame.mouse.get_pos()
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+        self.rect.left = mouse_x - self.rect.size[0]/2
+        self.rect.top = mouse_y - self.rect.size[1]/2
 
     def tick(self):
-        if not Game.paused and not Game.over:
-            # Check if the mouse was clicked
-            if pygame.key.get_pressed () [0] and not Cursor.clicked:
-                # Play Gunshot Sound and add Total Sounds
-                Cursor.clicked = True
-                self.gunShotSound.play()
-                Game.total_shots += 1
+        # Play Gunshot Sound and add Total Sounds
+        Cursor.clicked = True
+        self.gunShotSound.play()
+        Game.total_shots += 1
 
-            # Avoid repeated mouse clicks
-            while pygame.key.get_pressed () [0]:
-                sleep(0.1)
-            Cursor.clicked = False
-            self.update()
-
-            # Bring the tree and grass infront of all the ducks
-            # foreground.elevate()
-
+        self.update()
+            
 
 class Game:
     paused = False
