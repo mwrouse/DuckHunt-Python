@@ -14,19 +14,18 @@ class Image(pygame.sprite.Sprite):
 
 
 class Cursor(Image):
-
     def __init__(self):
         super().__init__('Sprites/cursor.png', left=500, top=350)  # TODO
         # Load gunshot sound
         self.gunShotSound = pygame.mixer.Sound(os.path.join(os.getcwd(), 'Sounds', 'shot.wav'))
         # Hide mouse
         pygame.mouse.set_visible(False)
-        self.clicked = False 
+        self.clicked = False
 
     def update(self):
         mouse_x, mouse_y = pygame.mouse.get_pos()
-        self.rect.left = mouse_x - self.rect.size[0]/2
-        self.rect.top = mouse_y - self.rect.size[1]/2
+        self.rect.left = mouse_x - self.rect.size[0] / 2
+        self.rect.top = mouse_y - self.rect.size[1] / 2
 
     def tick(self):
         # Play Gunshot Sound and add Total Sounds
@@ -39,12 +38,20 @@ class Cursor(Image):
 
 class Dog(Image):
     def __init__(self):
+        # TODO: różne pieski
         super().__init__('Sprites/dog.PNG', left=500, top=350)
-        self.clicked = False
+        self.image.set_colorkey(self.image.get_at((0, 0)), pygame.constants.RLEACCEL)
+        self.dogWinSound = pygame.mixer.Sound(os.path.join(os.getcwd(), 'Sounds', 'howlovely.wav'))
+        self.dogLoseSound = pygame.mixer.Sound(os.path.join(os.getcwd(), 'Sounds', 'eve.oga'))
+
+    def celebration(self, cel_type):
+        if cel_type == 'win':
+            self.dogWinSound.play()
+        elif cel_type == 'loss':
+            self.dogLoseSound.play()
 
 
 class Duck(Image):
-
     def __init__(self, duck_type):
         ducks = {'ola': 'blue',
                  'korwin': 'blue',
@@ -57,7 +64,6 @@ class Duck(Image):
         corner = self.image.get_at((0, 0))
         self.image.set_colorkey(corner, pygame.constants.RLEACCEL)
         self.image = pygame.transform.scale(self.image, (72, 76))
-
 
 
 class Game:
@@ -74,7 +80,7 @@ class Game:
         self.crosshair = None
         self.duck_count = 2
         self.countdown = 10
-        self.dog = Dog()
+        self.dog = None
 
     def on_init(self):
         pygame.init()
@@ -83,6 +89,7 @@ class Game:
         self.background = Image('Sprites/background.png')
         self.crosshair = Cursor()
         self.duck = Duck('janek')
+        self.dog = Dog()
         return True
 
     def on_event(self, event):
@@ -118,13 +125,13 @@ class Game:
 
     def subround_end(self, type):
         self.crosshair.remove()
+        # TODO: to będą 3 warunki, gdzieś je wrzucić
         # if self.duck_count == 0:
         # elif self.countdown == 0:
-        # elif self.duck_count ==
-        if type == 'success':
-            self.dog.add()
-        elif type == 'failure':
-            self.dog.add()
+        # elif self.duck_count == 0:
+        self.dog.add(type)
+
+
 if __name__ == "__main__":
     theApp = Game()
     theApp.on_execute()
