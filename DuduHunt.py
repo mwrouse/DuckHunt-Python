@@ -16,7 +16,7 @@ class Image(pygame.sprite.Sprite):
 class Cursor(Image):
 
     def __init__(self):
-        super().__init__('Sprites/cursor.png', left=500, top=350)
+        super().__init__('Sprites/cursor.png', left=500, top=350)  # TODO
         # Load gunshot sound
         self.gunShotSound = pygame.mixer.Sound(os.path.join(os.getcwd(), 'Sounds', 'shot.wav'))
         # Hide mouse
@@ -37,6 +37,23 @@ class Cursor(Image):
         self.update()
             
 
+class Duck(Image):
+
+    def __init__(self, duck_type):
+        ducks = {'ola': 'blue',
+                 'korwin': 'blue',
+                 'lysy': 'red',
+                 'janek': 'black'
+                 }
+        # Point Values Based On Duck Color
+        point_values = {"blue": 25, "red": 50, "black": 75}
+        super().__init__('Sprites/{}/duck1.png'.format(ducks[duck_type]), left=200, top=300)
+        corner = self.image.get_at((0, 0))
+        self.image.set_colorkey(corner, pygame.constants.RLEACCEL)
+        self.image = pygame.transform.scale(self.image, (72, 76))
+
+
+
 class Game:
     paused = False
     over = False
@@ -56,7 +73,7 @@ class Game:
         pygame.display.set_caption('Dudu Hunt')
         self.background = Image('Sprites/background.png')
         self.crosshair = Cursor()
-        # self._display_surf.blit(self.crosshair.image, (500,350))  # TODO
+        self.duck = Duck('janek')
         return True
 
     def on_event(self, event):
@@ -73,6 +90,7 @@ class Game:
     def on_render(self):
         self._display_surf.blit(self.background.image, (0, 0))
         self._display_surf.blit(self.crosshair.image, self.crosshair.rect)
+        self._display_surf.blit(self.duck.image, self.duck.rect)
         pygame.display.update()
 
     def on_cleanup(self):
