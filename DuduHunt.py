@@ -35,7 +35,13 @@ class Cursor(Image):
         Game.total_shots += 1
 
         self.update()
-            
+
+
+class Dog(Image):
+    def __init__(self):
+        super().__init__('Sprites/dog.PNG', left=500, top=350)
+        self.clicked = False
+
 
 class Game:
     paused = False
@@ -49,6 +55,9 @@ class Game:
         self._static = True
         self.background = None
         self.crosshair = None
+        self.duck_count = 2
+        self.countdown = 10
+        self.dog = Dog()
 
     def on_init(self):
         pygame.init()
@@ -89,7 +98,15 @@ class Game:
             self.on_render()
         self.on_cleanup()
 
-
+    def subround_end(self, type):
+        self.crosshair.remove()
+        # if self.duck_count == 0:
+        # elif self.countdown == 0:
+        # elif self.duck_count ==
+        if type == 'success':
+            self.dog.add()
+        elif type == 'failure':
+            self.dog.add()
 if __name__ == "__main__":
     theApp = Game()
     theApp.on_execute()
