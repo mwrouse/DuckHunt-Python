@@ -37,12 +37,13 @@ class Cursor(Image):
 
 
 class Dog(Image):
-    def __init__(self):
+    def __init__(self, subround):
         # TODO: różne pieski
         super().__init__('Sprites/dog.PNG', left=500, top=350)
         self.image.set_colorkey(self.image.get_at((0, 0)), pygame.constants.RLEACCEL)
-        self.dogWinSound = pygame.mixer.Sound(os.path.join(os.getcwd(), 'Sounds', 'howlovely.wav'))
-        self.dogLoseSound = pygame.mixer.Sound(os.path.join(os.getcwd(), 'Sounds', 'eve.oga'))
+        self.dogWinSound = pygame.mixer.Sound(os.path.join(os.getcwd(), 'Sounds', 'eve.oga'))
+        self.dogLoseSound = pygame.mixer.Sound(os.path.join(os.getcwd(), 'Sounds', 'howlovely.wav'))
+        self.subround = subround
 
     def celebration(self, cel_type):
         if cel_type == 'win':
@@ -79,7 +80,9 @@ class Game:
         self.background = None
         self.crosshair = None
         self.duck_count = 2
+        self.shots_left = 3
         self.countdown = 10
+        self.duck = None
         self.dog = None
 
     def on_init(self):
@@ -89,7 +92,7 @@ class Game:
         self.background = Image('Sprites/background.png')
         self.crosshair = Cursor()
         self.duck = Duck('janek')
-        self.dog = Dog()
+        self.dog = Dog(self)
         return True
 
     def on_event(self, event):
@@ -97,6 +100,10 @@ class Game:
             self._running = False
         if event.type == pygame.MOUSEBUTTONUP:
             self.crosshair.tick()
+            self.shots_left -= 1
+            if self.shots_left == 0 and self.duck_count > 0:
+                self.subround_end('loss')
+                self._running = False
         if event.type == pygame.MOUSEMOTION:
             self.crosshair.update()
 
@@ -110,7 +117,7 @@ class Game:
         pygame.display.update()
 
     def on_cleanup(self):
-        pygame.quit()
+            pygame.quit()
 
     def on_execute(self):
         if not self.on_init():
@@ -124,12 +131,15 @@ class Game:
         self.on_cleanup()
 
     def subround_end(self, type):
-        self.crosshair.remove()
         # TODO: to będą 3 warunki, gdzieś je wrzucić
         # if self.duck_count == 0:
         # elif self.countdown == 0:
         # elif self.duck_count == 0:
-        self.dog.add(type)
+        self.dog.celebration(type)
+        # self._display_surf.blit(self.dog.image, self.dog.rect)
+        # pygame.display.update()
+        self._display_surf.blit(self.background.image, (0, 0))
+        pygame.display.update()
 
 
 if __name__ == "__main__":
