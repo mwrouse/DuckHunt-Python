@@ -399,7 +399,7 @@ class Clock(games.Sprite):
 # ==========================================
 class Game(games.Sprite):
     """ Duck Spawner Class """
-    image = games.load_image("sprites\spawner.png")
+    image = games.load_image("Sprites\spawner.png")
 
     # Scoring
     score = 0 
